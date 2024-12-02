@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { SiLinkedin, SiGithub, SiDevpost } from "react-icons/si";
 import { ProjectDisplay } from "./ProjectDisplay";
@@ -26,7 +27,7 @@ const IconDisplay = ({ items }: { items: any }) => {
   );
 };
 
-export default function Home({ packages }) {
+export default function Home({ packages, blogs }: any) {
   const socials = [
     {
       id: 1,
@@ -77,10 +78,10 @@ export default function Home({ packages }) {
       </Container>
       <Container text={"Blogs"}>
         <ul className="flex flex-col gap-1   max-w-44">
-          <ProjectDisplay items={[]} />
+          <ProjectDisplay items={blogs} />
         </ul>
       </Container>
-      <Container text={"Awards"}>
+      <Container text={"Hackathons"}>
         <ul className="flex flex-col gap-1   max-w-44">
           <ProjectDisplay items={[]} />
         </ul>

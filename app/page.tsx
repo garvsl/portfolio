@@ -1,8 +1,5 @@
 "use server";
 import Home from "@/components/Home";
-import { ProjectDisplay } from "@/components/ProjectDisplay";
-import { SiDevpost, SiGithub, SiLinkedin } from "react-icons/si";
-
 /* eslint-disable react/prop-types */
 
 async function getPackages() {
@@ -43,6 +40,43 @@ async function getPackages() {
   }
 }
 
+async function getBlogs() {
+  try {
+    const response = await fetch("https://blog.garvsl.com/", {
+      cache: "default",
+      credentials: "include",
+      headers: {
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        Priority: "u=0, i",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0.1 Safari/605.1.15",
+      },
+      method: "GET",
+      mode: "cors",
+      redirect: "follow",
+      referrerPolicy: "strict-origin-when-cross-origin",
+    });
+    const result = await response.text();
+    const split = result.split(`"mediumUrl":"`);
+    split.shift();
+    const blogs = split.map((e) => {
+      const link = JSON.parse(`"${e.slice(0, e.indexOf(`"`))}"`);
+      return {
+        id: link.slice(link.lastIndexOf("-") + 1),
+        link: link,
+        title: link.slice(link.lastIndexOf("/") + 1, link.lastIndexOf("-")),
+      };
+    });
+
+    return blogs;
+  } catch (e) {
+    console.log("packages erorr", e);
+    return [];
+  }
+}
+
 export default async function Page() {
-  return <Home packages={await getPackages()} />;
+  return <Home packages={await getPackages()} blogs={await getBlogs()} />;
 }
