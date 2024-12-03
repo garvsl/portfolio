@@ -77,6 +77,56 @@ async function getBlogs() {
   }
 }
 
+async function getHackathons() {
+  try {
+    const response = await fetch("https://devpost.com/garvsl", {
+      cache: "default",
+      credentials: "include",
+      headers: {
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        Priority: "u=0, i",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0.1 Safari/605.1.15",
+      },
+      method: "GET",
+      mode: "cors",
+      redirect: "follow",
+      referrerPolicy: "strict-origin-when-cross-origin",
+    });
+
+    const result = await response.text();
+    const split = result.split(`data-software-id`);
+    split.shift();
+    const hackathons = split.map((e) => {
+      const hack = e.slice(0, e.indexOf("<!-- cache end -->"));
+      const title = hack
+        .slice(hack.indexOf("<h5>") + 4, hack.indexOf("</h5>"))
+        .trim();
+      const winner = hack.includes("Winner");
+      return {
+        id: e.slice(2, e.indexOf(`">`)),
+        link: e.slice(
+          e.indexOf("href") + 6,
+          e.indexOf(`">`, e.indexOf("href") + 5)
+        ),
+        title: winner ? title + " - Winner" : title,
+      };
+    });
+    return hackathons;
+  } catch (e) {
+    console.log("packages erorr", e);
+    return [];
+  }
+}
+
 export default async function Page() {
-  return <Home packages={await getPackages()} blogs={await getBlogs()} />;
+  return (
+    <Home
+      packages={await getPackages()}
+      blogs={await getBlogs()}
+      hackathons={await getHackathons()}
+    />
+  );
 }

@@ -27,7 +27,7 @@ const IconDisplay = ({ items }: { items: any }) => {
   );
 };
 
-export default function Home({ packages, blogs }: any) {
+export default function Home({ packages, blogs, hackathons }: any) {
   const socials = [
     {
       id: 1,
@@ -83,7 +83,7 @@ export default function Home({ packages, blogs }: any) {
       </Container>
       <Container text={"Hackathons"}>
         <ul className="flex flex-col gap-1   max-w-44">
-          <ProjectDisplay items={[]} />
+          <ProjectDisplay items={hackathons} />
         </ul>
       </Container>
       <Container text={"Experience"}>
