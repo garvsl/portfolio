@@ -20,12 +20,22 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
       {items &&
         items.slice(show, show + 3).map((e: any) => (
           <a target="_blank" key={e.id} href={e.link}>
-            <li className="border rounded p-1 text-xs hover:bg-white hover:text-black truncate">
+            <li className="h-6 border rounded p-1 text-xs hover:bg-white hover:text-black truncate">
               {e.title}
             </li>
           </a>
         ))}
-      {(show + 3 < items.length || show > 3) && (
+      {show + 3 < items.length ||
+        (show >= 3 &&
+          [...Array(3 - items.slice(show, show + 3).length).keys()].map(
+            (e, i) => (
+              <a key={e + i} target="_blank">
+                <li className="h-6 border  rounded p-1 text-xs "></li>
+              </a>
+            )
+          ))}
+
+      {(show + 3 < items.length || show >= 3) && (
         <li className="border rounded p-1 flex gap-2 w-min text-xs truncate">
           <button
             disabled={show == 0}

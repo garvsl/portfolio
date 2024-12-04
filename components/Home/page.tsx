@@ -3,10 +3,18 @@
 import { SiLinkedin, SiGithub, SiDevpost } from "react-icons/si";
 import { ProjectDisplay } from "../Projects/page";
 
-const Container = ({ text, children }: { text: string; children: any }) => {
+const Container = ({
+  text,
+  children,
+  size = "text-md",
+}: {
+  text: string;
+  children: any;
+  size?: any;
+}) => {
   return (
     <div>
-      <h2>{text}</h2>
+      <h2 className={size}>{text}</h2>
       {children}
     </div>
   );
@@ -61,7 +69,7 @@ export default function Home({ packages, blogs, hackathons }: any) {
 
   return (
     <div className="p-2 flex flex-col gap-2">
-      <Container text={"Garvsl"}>
+      <Container size={"text-xl"} text={"Garvsl"}>
         <ul className="flex flex-row gap-1 pl-0.5  w-min">
           <IconDisplay items={socials} />
         </ul>
@@ -86,7 +94,7 @@ export default function Home({ packages, blogs, hackathons }: any) {
           <ProjectDisplay items={hackathons} />
         </ul>
       </Container>
-      <Container text={"Experience"}>
+      {/* <Container text={"Experience"}>
         <ul className="flex flex-col gap-1   max-w-44">
           <ProjectDisplay items={[]} />
         </ul>
@@ -95,7 +103,7 @@ export default function Home({ packages, blogs, hackathons }: any) {
         <ul className="flex flex-col gap-1   max-w-44">
           <ProjectDisplay items={[]} />
         </ul>
-      </Container>
+      </Container> */}
     </div>
   );
 }
