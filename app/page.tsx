@@ -137,7 +137,7 @@ async function getProjects() {
       requestOptions
     );
     const result = await response.json();
-    const projects = result.result
+    const projects = result?.result
       .filter((e: any) => {
         return e.type == "CNAME";
       })
