@@ -26,13 +26,15 @@ async function getPackages() {
     const obj = context.slice(0, context.search("</script>"));
     const objJson = JSON.parse(obj);
     let packages = objJson.context.packages.objects;
-    packages = packages.map((e: any) => {
-      return {
-        id: e.id,
-        title: e.name,
-        link: `https://www.npmjs.com/package/${e.name}`,
-      };
-    });
+    packages = packages
+      .map((e: any) => {
+        return {
+          id: e.id,
+          title: e.name,
+          link: `https://www.npmjs.com/package/${e.name}`,
+        };
+      })
+      .reverse();
     return packages;
   } catch (e) {
     console.log("packages erorr", e);
@@ -139,8 +141,9 @@ async function getProjects() {
     const result = await response.json();
     const projects = result?.result
       .filter((e: any) => {
-        return e.type == "CNAME";
+        return e.type == "CNAME" && e.name != "www." + e.zone_name;
       })
+      .reverse()
       .map((e: any) => {
         const title = e.name.slice(0, e.name.indexOf("."));
         return {
