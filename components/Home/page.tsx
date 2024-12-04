@@ -35,7 +35,7 @@ const IconDisplay = ({ items }: { items: any }) => {
   );
 };
 
-export default function Home({ packages, blogs, hackathons }: any) {
+export default function Home({ packages, projects, blogs, hackathons }: any) {
   const socials = [
     {
       id: 1,
@@ -44,27 +44,6 @@ export default function Home({ packages, blogs, hackathons }: any) {
     },
     { id: 2, icon: SiGithub, link: "https://github.com/garvsl" },
     { id: 3, icon: SiDevpost, link: "https://devpost.com/garvsl" },
-  ];
-
-  const projects = [
-    {
-      id: 1,
-      title: "Crowdwrap",
-      icon: SiLinkedin,
-      link: "https://crowdwrap.garvsl.com",
-    },
-    {
-      id: 2,
-      title: "HealthHoppers",
-      icon: SiGithub,
-      link: "https://healthhoppers.garvsl.com",
-    },
-    {
-      id: 3,
-      title: "Relyvin",
-      icon: SiDevpost,
-      link: "https://relyvin.garvsl.com",
-    },
   ];
 
   return (

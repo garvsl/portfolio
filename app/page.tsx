@@ -119,10 +119,47 @@ async function getHackathons() {
   }
 }
 
+async function getProjects() {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("X-Auth-Email", `${process.env.CLOUDFLARE_EMAIL}`);
+  myHeaders.append("Authorization", `Bearer ${process.env.CLOUDFLARE_API}`);
+
+  const requestOptions: any = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  try {
+    const response = await fetch(
+      `https://api.cloudflare.com/client/v4/zones/${process.env.CLOUDFLARE_ZONE}/dns_records`,
+      requestOptions
+    );
+    const result = await response.json();
+    const projects = result.result
+      .filter((e: any) => {
+        return e.type == "CNAME";
+      })
+      .map((e: any) => {
+        const title = e.name.slice(0, e.name.indexOf("."));
+        return {
+          id: e.id,
+          link: "https://" + e.name,
+          title: title.charAt(0).toUpperCase() + title.slice(1),
+        };
+      });
+    return projects;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export default async function Page() {
   return (
     <Home
       packages={await getPackages()}
+      projects={await getProjects()}
       blogs={await getBlogs()}
       hackathons={await getHackathons()}
     />
