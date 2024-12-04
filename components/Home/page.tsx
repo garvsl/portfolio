@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { SiLinkedin, SiGithub, SiDevpost } from "react-icons/si";
-import { ProjectDisplay } from "./ProjectDisplay";
+import { ProjectDisplay } from "../Projects/page";
 
 const Container = ({ text, children }: { text: string; children: any }) => {
   return (

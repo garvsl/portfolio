@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
-import Home from "@/components/Home";
-/* eslint-disable react/prop-types */
+import Home from "@/components/Home/page";
 
 async function getPackages() {
   try {
