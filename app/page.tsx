@@ -2,9 +2,9 @@
 "use server";
 import Home from "@/components/Home/page";
 
-async function getPackages() {
+async function getPackages(user: string) {
   try {
-    const response = await fetch("https://www.npmjs.com/~garvsl", {
+    const response = await fetch(`https://www.npmjs.com/~${user}`, {
       cache: "default",
       credentials: "include",
       headers: {
@@ -42,9 +42,9 @@ async function getPackages() {
   }
 }
 
-async function getBlogs() {
+async function getBlogs(site: string) {
   try {
-    const response = await fetch("https://blog.garvsl.com/", {
+    const response = await fetch(`${site}`, {
       cache: "default",
       credentials: "include",
       headers: {
@@ -78,9 +78,9 @@ async function getBlogs() {
   }
 }
 
-async function getHackathons() {
+async function getHackathons(user: string) {
   try {
-    const response = await fetch("https://devpost.com/garvsl", {
+    const response = await fetch(`https://devpost.com/${user}`, {
       cache: "default",
       credentials: "include",
       headers: {
@@ -121,11 +121,15 @@ async function getHackathons() {
   }
 }
 
-async function getProjects() {
+async function getProjects(
+  email: string | undefined,
+  api: string | undefined,
+  zone: string | undefined
+) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("X-Auth-Email", `${process.env.CLOUDFLARE_EMAIL}`);
-  myHeaders.append("Authorization", `Bearer ${process.env.CLOUDFLARE_API}`);
+  myHeaders.append("X-Auth-Email", `${email}`);
+  myHeaders.append("Authorization", `Bearer ${api}`);
 
   const requestOptions: any = {
     method: "GET",
@@ -135,7 +139,7 @@ async function getProjects() {
 
   try {
     const response = await fetch(
-      `https://api.cloudflare.com/client/v4/zones/${process.env.CLOUDFLARE_ZONE}/dns_records`,
+      `https://api.cloudflare.com/client/v4/zones/${zone}/dns_records`,
       requestOptions
     );
     const result = await response.json();
@@ -161,10 +165,14 @@ async function getProjects() {
 export default async function Page() {
   return (
     <Home
-      packages={await getPackages()}
-      projects={await getProjects()}
-      blogs={await getBlogs()}
-      hackathons={await getHackathons()}
+      packages={await getPackages("garvsl")}
+      projects={await getProjects(
+        process.env.CLOUDFLARE_EMAIL,
+        process.env.CLOUDFLARE_API,
+        process.env.CLOUDFLARE_ZONE
+      )}
+      blogs={await getBlogs("https://blog.garvsl.com")}
+      hackathons={await getHackathons("garvsl")}
     />
   );
 }
