@@ -7,9 +7,12 @@ import { RiEmotionSadLine } from "react-icons/ri";
 export const ProjectDisplay = ({ items }: { items: any }) => {
   const [show, setShow] = useState(0);
 
+  const listClass = "h-6 border rounded p-1 text-xs truncate";
+  const hoverClass = "hover:bg-white hover:text-black truncate";
+
   if (items.length == 0) {
     return (
-      <li className="border rounded p-1 text-xs cursor-not-allowed hover:bg-white hover:text-black truncate">
+      <li className={`${listClass} ${hoverClass} cursor-not-allowed `}>
         <RiEmotionSadLine />
       </li>
     );
@@ -20,9 +23,7 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
       {items &&
         items.slice(show, show + 3).map((e: any) => (
           <a target="_blank" key={e.id} href={e.link}>
-            <li className="h-6 border rounded p-1 text-xs hover:bg-white hover:text-black truncate">
-              {e.title}
-            </li>
+            <li className={`${listClass} ${hoverClass}`}>{e.title}</li>
           </a>
         ))}
       {show + 3 < items.length ||
@@ -30,18 +31,16 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
           [...Array(3 - items.slice(show, show + 3).length).keys()].map(
             (e, i) => (
               <a key={e + i} target="_blank">
-                <li className="h-6 border  rounded p-1 text-xs "></li>
+                <li className={`${listClass}`}></li>
               </a>
             )
           ))}
 
       {(show + 3 < items.length || show >= 3) && (
-        <li className="border rounded p-1 flex gap-2 w-min text-xs truncate">
+        <li className={`${listClass} flex gap-2 w-min`}>
           <button
             disabled={show == 0}
-            className={`${
-              show != 0 && " hover:bg-white hover:text-black rounded"
-            }`}
+            className={`${show != 0 && `${hoverClass} rounded`}`}
             onClick={() => setShow((e) => e - 3)}
           >
             <BsArrowLeftShort />
@@ -55,7 +54,7 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
             className={`${
               show + 3 != items.length &&
               show + 3 < items.length &&
-              "hover:bg-white hover:text-black rounded"
+              `${hoverClass} rounded`
             }`}
             onClick={() => setShow((e) => e + 3)}
           >
