@@ -48,9 +48,9 @@ export default function Home({ packages, projects, blogs, hackathons }: any) {
 
   return (
     <div className="p-2 px-4 flex flex-col gap-4">
-      <div className="text-[clamp(1.5rem,2.5vw,2.3rem)] flex items-center gap-2">
+      <div className="text-[clamp(1.5rem,2.5vw,2.3rem)] flex items-center gap-4">
         <h2>Garvsl</h2>
-        <ul className="flex flex-row gap-2   w-min">
+        <ul className="flex flex-row gap-2  w-min">
           <IconDisplay items={socials} />
         </ul>
       </div>
