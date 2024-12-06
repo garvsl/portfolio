@@ -2,23 +2,25 @@
 "use server";
 import Home from "@/components/Home/page";
 
+const headers: any = {
+  cache: "default",
+  credentials: "include",
+  headers: {
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "User-Agent":
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
+    "Cache-Control": "public, max-age=300",
+  },
+  method: "GET",
+  mode: "cors",
+  redirect: "follow",
+  referrerPolicy: "strict-origin-when-cross-origin",
+};
+
 async function getPackages(user: string) {
   try {
-    const response = await fetch(`https://www.npmjs.com/~${user}`, {
-      cache: "default",
-      credentials: "include",
-      headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "User-Agent":
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
-      },
-      method: "GET",
-      mode: "cors",
-      redirect: "follow",
-      referrerPolicy: "strict-origin-when-cross-origin",
-    });
+    const response = await fetch(`https://www.npmjs.com/~${user}`, headers);
     const result = await response.text();
     const context = result.slice(
       result.search("window.__context__") + "window.__context__".length + 2
@@ -44,21 +46,7 @@ async function getPackages(user: string) {
 
 async function getBlogs(site: string) {
   try {
-    const response = await fetch(`${site}`, {
-      cache: "default",
-      credentials: "include",
-      headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "User-Agent":
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
-      },
-      method: "GET",
-      mode: "cors",
-      redirect: "follow",
-      referrerPolicy: "strict-origin-when-cross-origin",
-    });
+    const response = await fetch(`${site}`, headers);
     const result = await response.text();
     const split = result.split(`"mediumUrl":"`);
     split.shift();
@@ -67,7 +55,10 @@ async function getBlogs(site: string) {
       return {
         id: link.slice(link.lastIndexOf("-") + 1),
         link: link,
-        title: link.slice(link.lastIndexOf("/") + 1, link.lastIndexOf("-")),
+        title: link
+          .slice(link.lastIndexOf("/") + 1, link.lastIndexOf("-"))
+          .split("-")
+          .join(" "),
       };
     });
 
@@ -80,21 +71,7 @@ async function getBlogs(site: string) {
 
 async function getHackathons(user: string) {
   try {
-    const response = await fetch(`https://devpost.com/${user}`, {
-      cache: "default",
-      credentials: "include",
-      headers: {
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "User-Agent":
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
-      },
-      method: "GET",
-      mode: "cors",
-      redirect: "follow",
-      referrerPolicy: "strict-origin-when-cross-origin",
-    });
+    const response = await fetch(`https://devpost.com/${user}`, headers);
 
     const result = await response.text();
     const split = result.split(`data-software-id`);
