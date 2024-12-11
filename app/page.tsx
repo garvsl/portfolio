@@ -4,7 +4,7 @@ import Home from "@/components/Home/page";
 
 const headers: any = {
   cache: "default",
-  credentials: "include",
+  credentials: "omit",
   headers: {
     Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
@@ -15,7 +15,7 @@ const headers: any = {
   method: "GET",
   mode: "cors",
   redirect: "follow",
-  referrerPolicy: "strict-origin-when-cross-origin",
+  referrerPolicy: "no-referrer-when-downgrade",
 };
 
 async function getPackages(user: string) {
