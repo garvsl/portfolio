@@ -2,6 +2,7 @@
 "use server";
 import Home from "@/components/Home/page";
 import { getHackathons } from "get-hackathons";
+import { getPackages } from "get-npm-packages";
 
 const headers: any = {
   cache: "default",
@@ -18,32 +19,6 @@ const headers: any = {
   redirect: "follow",
   referrerPolicy: "no-referrer-when-downgrade",
 };
-
-async function getPackages(user: string) {
-  try {
-    const response = await fetch(`https://www.npmjs.com/~${user}`, headers);
-    const result = await response.text();
-    const context = result.slice(
-      result.search("window.__context__") + "window.__context__".length + 2
-    );
-    const obj = context.slice(0, context.search("</script>"));
-    const objJson = JSON.parse(obj);
-    let packages = objJson.context.packages.objects;
-    packages = packages
-      .map((e: any) => {
-        return {
-          id: e.id,
-          title: e.name,
-          link: `https://www.npmjs.com/package/${e.name}`,
-        };
-      })
-      .reverse();
-    return packages;
-  } catch (e) {
-    console.log("packages erorr", e);
-    return [];
-  }
-}
 
 async function getBlogs(site: string) {
   try {
@@ -120,7 +95,7 @@ export default async function Page() {
   });
   return (
     <Home
-      packages={await getPackages("garvsl")}
+      packages={(await getPackages("garvsl")).packages}
       projects={await getProjects(
         process.env.CLOUDFLARE_EMAIL,
         process.env.CLOUDFLARE_API,
