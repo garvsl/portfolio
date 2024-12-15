@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 import Home from "@/components/Home/page";
+import { getHackathons } from "get-hackathons";
 
 const headers: any = {
   cache: "default",
@@ -69,35 +70,6 @@ async function getBlogs(site: string) {
   }
 }
 
-async function getHackathons(user: string) {
-  try {
-    const response = await fetch(`https://devpost.com/${user}`, headers);
-
-    const result = await response.text();
-    const split = result.split(`data-software-id`);
-    split.shift();
-    const hackathons = split.map((e) => {
-      const hack = e.slice(0, e.indexOf("<!-- cache end -->"));
-      const title = hack
-        .slice(hack.indexOf("<h5>") + 4, hack.indexOf("</h5>"))
-        .trim();
-      const winner = hack.includes("Winner");
-      return {
-        id: e.slice(2, e.indexOf(`">`)),
-        link: e.slice(
-          e.indexOf("href") + 6,
-          e.indexOf(`">`, e.indexOf("href") + 5)
-        ),
-        title: winner ? title + " - Winner" : title,
-      };
-    });
-    return hackathons;
-  } catch (e) {
-    console.log("packages erorr", e);
-    return [];
-  }
-}
-
 async function getProjects(
   email: string | undefined,
   api: string | undefined,
@@ -149,7 +121,7 @@ export default async function Page() {
         process.env.CLOUDFLARE_ZONE
       )}
       blogs={await getBlogs("https://blog.garvsl.com")}
-      hackathons={await getHackathons("garvsl")}
+      hackathons={(await getHackathons("garvsl")).hackathons}
     />
   );
 }
