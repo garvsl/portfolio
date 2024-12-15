@@ -112,6 +112,12 @@ async function getProjects(
 }
 
 export default async function Page() {
+  const hackathons = (await getHackathons("garvsl")).hackathons.map((e) => {
+    return {
+      ...e,
+      title: e.winner ? e.title + " - Winner" : e.title,
+    };
+  });
   return (
     <Home
       packages={await getPackages("garvsl")}
@@ -121,7 +127,7 @@ export default async function Page() {
         process.env.CLOUDFLARE_ZONE
       )}
       blogs={await getBlogs("https://blog.garvsl.com")}
-      hackathons={(await getHackathons("garvsl")).hackathons}
+      hackathons={hackathons}
     />
   );
 }
