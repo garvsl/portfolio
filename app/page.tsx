@@ -5,11 +5,7 @@ import { getHackathons } from "get-hackathons";
 import { getMedium } from "get-medium";
 import { getPackages } from "get-npm-packages";
 
-async function getProjects(
-  email: string | undefined,
-  api: string | undefined,
-  zone: string | undefined
-) {
+async function getProjects(email: string, api: string, zone: string) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("X-Auth-Email", `${email}`);
@@ -66,9 +62,9 @@ export default async function Page() {
     <Home
       packages={(await getPackages("garvsl")).packages}
       projects={await getProjects(
-        process.env.CLOUDFLARE_EMAIL,
-        process.env.CLOUDFLARE_API,
-        process.env.CLOUDFLARE_ZONE
+        process.env.CLOUDFLARE_EMAIL!,
+        process.env.CLOUDFLARE_API!,
+        process.env.CLOUDFLARE_ZONE!
       )}
       blogs={blogs}
       hackathons={hackathons}
