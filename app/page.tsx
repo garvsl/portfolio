@@ -2,48 +2,8 @@
 "use server";
 import Home from "@/components/Home/page";
 import { getHackathons } from "get-hackathons";
+import { getMedium } from "get-medium";
 import { getPackages } from "get-npm-packages";
-
-const headers: any = {
-  cache: "default",
-  credentials: "omit",
-  headers: {
-    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "User-Agent":
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 17_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Mobile/15E148 Safari/604.1",
-    "Cache-Control": "public, max-age=300",
-  },
-  method: "GET",
-  mode: "cors",
-  redirect: "follow",
-  referrerPolicy: "no-referrer-when-downgrade",
-};
-
-async function getBlogs(site: string) {
-  try {
-    const response = await fetch(`${site}`, headers);
-    const result = await response.text();
-    const split = result.split(`"mediumUrl":"`);
-    split.shift();
-    const blogs = split.map((e) => {
-      const link = JSON.parse(`"${e.slice(0, e.indexOf(`"`))}"`);
-      return {
-        id: link.slice(link.lastIndexOf("-") + 1),
-        link: link,
-        title: link
-          .slice(link.lastIndexOf("/") + 1, link.lastIndexOf("-"))
-          .split("-")
-          .join(" "),
-      };
-    });
-
-    return blogs;
-  } catch (e) {
-    console.log("packages erorr", e);
-    return [];
-  }
-}
 
 async function getProjects(
   email: string | undefined,
@@ -93,6 +53,15 @@ export default async function Page() {
       title: e.winner ? e.title + " - Winner" : e.title,
     };
   });
+
+  const blogs = (await getMedium("garvsl")).map((e) => {
+    return {
+      id: e.id,
+      title: e.title,
+      link: e.mediumUrl,
+    };
+  });
+
   return (
     <Home
       packages={(await getPackages("garvsl")).packages}
@@ -101,7 +70,7 @@ export default async function Page() {
         process.env.CLOUDFLARE_API,
         process.env.CLOUDFLARE_ZONE
       )}
-      blogs={await getBlogs("https://blog.garvsl.com")}
+      blogs={blogs}
       hackathons={hackathons}
     />
   );
