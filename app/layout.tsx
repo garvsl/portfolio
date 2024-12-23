@@ -3,15 +3,22 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const garvFont = localFont({
+  src: [
+    {
+      path: "../public/fonts/idk.woff2",
+      weight: "300",
+    },
+    {
+      path: "../public/fonts/normal.woff2",
+      weight: "400",
+    },
+    {
+      path: "../public/fonts/mono.woff",
+      weight: "500",
+    },
+  ],
+  variable: "--garv-font",
 });
 
 export const metadata: Metadata = {
@@ -27,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${garvFont.variable}  font-garvFont   antialiased bg-[#faf9f8] text-[rgba(0,0,0,0.85)]`}
       >
         {children}
         <Analytics />
