@@ -8,7 +8,7 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
   const [show, setShow] = useState(0);
 
   const listClass =
-    "border-t-gray-500 border-b-gray-500  border-b p-1   text-[clamp(15px,2.3vw,1.2rem)] truncate";
+    " font-normal text-[rgba(0,0,0,0.75)]  p-1   text-[clamp(15px,2.5vw,1.5rem)] truncate";
   const hoverClass = "hover:bg-white hover:text-black truncate";
 
   if (items.length == 0) {
@@ -27,6 +27,7 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
         items.slice(show, show + 3).map((e: any) => (
           <a target="_blank" key={e.id} href={e.link}>
             <li className={`${listClass} ${hoverClass}`}>{e.title}</li>
+            <hr className="bg-[rgba(0,0,0,0.85)] text-[rgba(0,0,0,0.85)] border-0 h-[1px] " />
           </a>
         ))}
       {show + 3 < items.length ||

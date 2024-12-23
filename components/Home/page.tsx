@@ -6,7 +6,7 @@ import { ProjectDisplay } from "../Projects/page";
 const Container = ({
   text,
   children,
-  size = "text-[clamp(1.2rem,2.3vw,1.3rem)] font-medium",
+  size = "text-[clamp(1.1rem,2.3vw,1.2rem)] font-medium",
 }: {
   text: string;
   children: any;
@@ -47,34 +47,42 @@ export default function Home({ packages, projects, blogs, hackathons }: any) {
   ];
 
   return (
-    <div className="p-2 px-4 flex flex-col gap-4">
-      <div className="text-[clamp(1.5rem,2.5vw,2.3rem)] flex items-center gap-4">
-        <h2>Garvsl</h2>
-        <ul className="flex flex-row gap-2  w-min">
+    <div className="p-2">
+      <div className="p-2 px-4 flex flex-col    gap-4">
+        <div className="text-[clamp(2rem,2.3vw,2.3rem)]  flex items-center gap-4">
+          <h2
+            // style={{
+            //   fontSize: "30px",
+            // }}
+            className="font-medium text-4xl"
+          >
+            GARVSL
+          </h2>
+          {/* <ul className="flex flex-row gap-2  w-min">
           <IconDisplay items={socials} />
-        </ul>
-      </div>
-      <Container text={"Live Projects"}>
-        <ul className="flex flex-col ">
-          <ProjectDisplay items={projects} />
-        </ul>
-      </Container>
-      <Container text={"Packages"}>
-        <ul className="flex flex-col ">
-          <ProjectDisplay items={packages} />
-        </ul>
-      </Container>
-      <Container text={"Blogs"}>
-        <ul className="flex flex-col ">
-          <ProjectDisplay items={blogs} />
-        </ul>
-      </Container>
-      <Container text={"Hackathons"}>
-        <ul className="flex flex-col    ">
-          <ProjectDisplay items={hackathons} />
-        </ul>
-      </Container>
-      {/* <Container text={"Experience"}>
+        </ul> */}
+        </div>
+        <Container text={"LIVE PROJECTS"}>
+          <ul className="flex flex-col ">
+            <ProjectDisplay items={projects} />
+          </ul>
+        </Container>
+        <Container text={"PACKAGES"}>
+          <ul className="flex flex-col ">
+            <ProjectDisplay items={packages} />
+          </ul>
+        </Container>
+        <Container text={"BLOGS"}>
+          <ul className="flex flex-col ">
+            <ProjectDisplay items={blogs} />
+          </ul>
+        </Container>
+        <Container text={"HACKATHONS"}>
+          <ul className="flex flex-col    ">
+            <ProjectDisplay items={hackathons} />
+          </ul>
+        </Container>
+        {/* <Container text={"Experience"}>
         <ul className="flex flex-col gap-1   max-w-44">
           <ProjectDisplay items={[]} />
         </ul>
@@ -84,6 +92,7 @@ export default function Home({ packages, projects, blogs, hackathons }: any) {
           <ProjectDisplay items={[]} />
         </ul>
       </Container> */}
+      </div>
     </div>
   );
 }

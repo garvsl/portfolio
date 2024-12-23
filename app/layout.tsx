@@ -6,15 +6,15 @@ import { Analytics } from "@vercel/analytics/react";
 const garvFont = localFont({
   src: [
     {
-      path: "../public/fonts/idk.woff2",
+      path: "./fonts/idk.woff2",
       weight: "400",
     },
     {
-      path: "../public/fonts/normal.woff2",
+      path: "./fonts/normal.woff2",
       weight: "300",
     },
     {
-      path: "../public/fonts/mono.woff",
+      path: "./fonts/mono.woff",
       weight: "500",
     },
   ],
