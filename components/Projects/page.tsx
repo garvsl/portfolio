@@ -36,6 +36,7 @@ export const ProjectDisplay = ({ items }: { items: any }) => {
             (e, i) => (
               <a key={e + i} target="_blank">
                 <li className={`${listClass}`}>{"‎  "}</li>
+                <hr className="bg-[rgba(0,0,0,0.85)]  border-0 h-[1px] " />
               </a>
             )
           ))}
