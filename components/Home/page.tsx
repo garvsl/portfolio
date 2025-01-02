@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { SiLinkedin, SiGithub, SiDevpost } from "react-icons/si";
 // import { SiLinkedin, SiGithub, SiDevpost } from "react-icons/si";
 import { ProjectDisplay } from "../Projects/page";
 
@@ -20,31 +21,31 @@ const Container = ({
   );
 };
 
-// const IconDisplay = ({ items }: { items: any }) => {
-//   return (
-//     <>
-//       {items &&
-//         items.map((e: any) => (
-//           <a target="_blank" key={e.id} rel="noreferrer" href={e.link}>
-//             <li>
-//               <e.icon className=" hover:fill-white  hover:text-black" />
-//             </li>
-//           </a>
-//         ))}
-//     </>
-//   );
-// };
+const IconDisplay = ({ items }: { items: any }) => {
+  return (
+    <>
+      {items &&
+        items.map((e: any) => (
+          <a target="_blank" key={e.id} rel="noreferrer" href={e.link}>
+            <li>
+              <e.icon className=" hover:fill-slate-500  hover:text-black" />
+            </li>
+          </a>
+        ))}
+    </>
+  );
+};
 
 export default function Home({ packages, projects, blogs, hackathons }: any) {
-  // const socials = [
-  //   {
-  //     id: 1,
-  //     icon: SiLinkedin,
-  //     link: "https://www.linkedin.com/in/garvsl/",
-  //   },
-  //   { id: 2, icon: SiGithub, link: "https://github.com/garvsl" },
-  //   { id: 3, icon: SiDevpost, link: "https://devpost.com/garvsl" },
-  // ];
+  const socials = [
+    {
+      id: 1,
+      icon: SiLinkedin,
+      link: "https://www.linkedin.com/in/garvsl/",
+    },
+    { id: 2, icon: SiGithub, link: "https://github.com/garvsl" },
+    { id: 3, icon: SiDevpost, link: "https://devpost.com/garvsl" },
+  ];
 
   return (
     <div className="p-2">
@@ -58,9 +59,9 @@ export default function Home({ packages, projects, blogs, hackathons }: any) {
           >
             GARVSL
           </h2>
-          {/* <ul className="flex flex-row gap-2  w-min">
-          <IconDisplay items={socials} />
-        </ul> */}
+          <ul className="flex flex-row gap-2  w-min">
+            <IconDisplay items={socials} />
+          </ul>
         </div>
         <Container text={"LIVE PROJECTS"}>
           <ul className="flex flex-col ">
